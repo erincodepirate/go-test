@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type User struct {
 	ID        int
@@ -18,6 +21,9 @@ func GetUsers() []*User {
 }
 
 func AddUser(u User) (User, error) {
+	if u.ID != 0 {
+		return u, errors.New("new user cannot include id or it must be brand new")
+	}
 	u.ID = nextID
 	nextID++
 	users = append(users, &u)
